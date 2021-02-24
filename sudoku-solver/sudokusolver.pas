@@ -181,6 +181,7 @@ var
   s, n, ms, totalms: Int64;
   sl: TStringList;
   i: Integer;
+  PuzzleCount: Integer;
 begin
   // quick check parameters
   ErrorMsg:=CheckOptions('h', 'help');
@@ -201,10 +202,15 @@ begin
   sl := TStringList.Create;
   try
     sl.LoadFromFile('5.txt');
+    sl.Insert(0, '100007090030020008009600500005300900010080002600004000300000010040000007007000300');
+    sl.Insert(1, '008034060100080000700010000003000000020500910900000007006003801300000020000900040');
+
+    PuzzleCount := sl.Count;
+    PuzzleCount := 1000;
 
     with TSudoku.Create do
     try
-      for i := 0 to 100 do
+      for i := 0 to PuzzleCount - 1 do
       begin
         clock_gettime(CLOCK_MONOTONIC,@StartTime);
         sudoku := sl[i]; //'100007090030020008009600500005300900010080002600004000300000010040000007007000300';
@@ -233,7 +239,7 @@ begin
     finally
       Free;
     end;
-    WriteLn('Average ', totalms / 100, ' ms');
+    WriteLn('Average ', totalms / PuzzleCount, ' ms');
 
   finally
     sl.Free;
