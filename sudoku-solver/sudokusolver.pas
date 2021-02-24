@@ -115,6 +115,7 @@ var
   i, v: Integer;
   Cell, Neighbor: TCell;
   ok: Boolean;
+  Claims: Integer;
 begin
   i := -1;
   repeat
@@ -127,16 +128,15 @@ begin
     until not Cell.Original;
 
     // Find the next number the current cell can contain
+
+    Claims := 0;
+    for Neighbor in Cell.Neighbors do
+      Claims := Claims or (1 shl Neighbor.Value);
+
     ok := False;
     for v := cell.Value + 1 to 9 do
     begin
-      ok := True;
-      for Neighbor in Cell.Neighbors do
-        if Neighbor.Value = v then
-        begin
-          ok := False; // Current v is already used by one of the neighbors
-          Break;
-        end;
+      ok := (Claims and (1 shl v) = 0);
 
       if ok then
       begin
