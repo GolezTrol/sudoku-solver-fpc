@@ -232,14 +232,14 @@ begin
           s := EndTime.tv_sec - StartTime.tv_sec;
           n := EndTime.tv_nsec - StartTime.tv_nsec;
         end;
-        ms := ((s * 1000000000) + n) div 1000000;
+        ms := ((s * 1000000000) + n) div 1000;
         totalms := totalms + ms;
-        WriteLn('done in ', ms, ' ms');
+        WriteLn('done in ', ms, ' μs');
       end;
     finally
       Free;
     end;
-    WriteLn('Average ', totalms / PuzzleCount, ' ms');
+    WriteLn('Average ', Round(totalms / PuzzleCount), ' μs');
 
   finally
     sl.Free;
